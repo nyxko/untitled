@@ -39,8 +39,16 @@
     <?php while ( have_posts() ) : the_post(); ?>
       <article <?php post_class(); ?>>
 
-        <?php #echo get_post_meta( get_the_ID(), 'kicker', true ); ?>
-        <?php #echo get_the_term_list( get_the_ID(), 'category', '', ' ', '' ); ?>
+        <?php
+        if ( $kicker = get_post_meta( get_the_ID(), 'kicker', true ) ) {
+          echo '<div class="kicker">' . $kicker . '</div>';
+        }
+        ?>
+        <?php
+        if ( $category = get_the_term_list( get_the_ID(), 'category', '', ' ', '' ) ) {
+          echo '<div class="category">' . $category . '</div>';
+        }
+        ?>
 
         <?php
         the_title(
@@ -62,7 +70,7 @@
 
         <?php if ( is_singular() ) : ?>
         <?php #echo '<div class="author">' . get_the_author() . '</div>'; ?>
-        <?php #echo '<div class="date">' . get_the_date() . '</div>'; ?>
+        <?php echo '<div class="date">' . get_the_date() . '</div>'; ?>
         <?php #echo '<div class="tags">' . get_the_tag_list( 'Tags: ', ', ', '' ) . '</div>'; ?>
 
         <?php if ( $prev = get_previous_post() ) : ?>
